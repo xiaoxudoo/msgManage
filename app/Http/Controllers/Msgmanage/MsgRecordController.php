@@ -14,7 +14,6 @@ use App\Message;
 use App\MessageFirstGroup;
 use App\MessageSecondGroup;
 
-set_time_limit(0);//设置超时时间
 class MsgRecordController extends Controller
 {
      /**
@@ -22,7 +21,7 @@ class MsgRecordController extends Controller
      *
      * @return Response
      */
-    public function getMsgRecordList()
+    public function getMsgRecordList(Request $request)
     {
 
         //构造假数据
@@ -98,6 +97,7 @@ class MsgRecordController extends Controller
 
 
     public function displayMsgRecord(Request $request){
+
         //初始化返回值
         $ret = array('data' => array(),'status' => '-1','msg' => '');
 
@@ -147,7 +147,6 @@ class MsgRecordController extends Controller
     // common API -- preview / group Info
     public function previewMsgRecord(Request $request)
     {
-
         //初始化返回值
         $ret = array('data' => array(),'status' => '-1','msg' => '');
 
@@ -183,7 +182,8 @@ class MsgRecordController extends Controller
         
     }
 
-    public function getMsgGroup(){
+    public function getMsgGroup(Request $request){
+
         //初始化返回值
         $ret = array('first_class_amount' => 0,'first_class'=> array(),'status' => '-1','msg' => '');
 

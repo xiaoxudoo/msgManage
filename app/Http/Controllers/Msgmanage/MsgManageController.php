@@ -23,7 +23,7 @@ class MsgManageController extends Controller
      *
      * @return Response
      */
-    public function getMsgRecordList()
+    public function getMsgRecordList(Request $request )
     {
 
         //构造假数据
@@ -101,6 +101,7 @@ class MsgManageController extends Controller
 
     // 增加、更新 API
     public function createMsgRecord(MessageFormPostRequest $request){
+
     	$ret = array('status' => '-1','msg' => '');
 
         $validator = Validator::make($request->all(), [
@@ -133,7 +134,7 @@ class MsgManageController extends Controller
         		$message = new Message;
 				$message->m_title = $request->m_title;
 
-	        	$message->m_author = 0; //设置为session的值:Session::get('user_id');
+	        	$message->m_author = $request->session()->get('user_id') || 0; //设置为session的值:$request->session()->get('user_id');
 	        	$message->m_create_date = date("Y-m-d");
 	        	$message->m_send_date = date("Y-m-d",strtotime($request->m_create_date));
 	        	$message->m_send_timestamp = $request->m_create_date;
@@ -155,7 +156,7 @@ class MsgManageController extends Controller
         		$message= Message::find($message_id);
 
 				$message->m_title = $request->m_title;
-	        	$message->m_author = 0; //设置为session的值:Session::get('user_id');
+	        	$message->m_author = $request->session()->get('user_id') || 0; //设置为session的值:$request->session()->get('user_id');
 	        	$message->m_create_date = date("Y-m-d");
 	        	$message->m_send_date = date("Y-m-d",strtotime($request->m_create_date));
 	        	$message->m_send_timestamp = $request->m_create_date;

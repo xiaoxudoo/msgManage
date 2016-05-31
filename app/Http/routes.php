@@ -15,8 +15,8 @@
 |  消息管理
 |
 */ 
-Route::group(['middleware' => ['web'], 'namespace' => 'MsgManage'], function(){
-	//close this route when production
+Route::group(['middleware' => ['web','session_user'], 'namespace' => 'MsgManage'], function(){
+
 	Route::get('/', 'MsgRecordController@getMsgRecordList');
 	//搜索消息记录
 	Route::post('/searchMsgRecord', 'MsgRecordController@searchMsgRecord');
