@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0 " />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="keywords" content="营养，健康，科学" />
+    <meta name="description" content="专注于" />
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+    <script>
+        ;(function(win,doc){
+
+            win.onload=win.resize=function(){
+
+                doc.documentElement.style.fontSize=doc.documentElement.clientWidth*20/375+'px';
+            };
+
+        })(window,document);
+    </script>
+    <style>
+        html,body{font-size:20px; overflow-x:hidden;}
+        .wrap{padding:1.5rem 1rem 0;}
+        .big-tit{font-size:0.9rem; color:#333; text-align:center;}
+        .active-date{font-size:0.5rem; color:#999; margin-top:0.4rem; text-align:center;}
+        .active-detail{font-size:0.7rem; color:#666; line-height:1.2rem; margin-top:1.25rem;}
+    </style>
+    <title>Title</title>
+</head>
+<body>
+</body>
+<script>
+
+    var str=({
+        "status":0,			//0表示成功，负数表示失败
+        "message":"ok",
+        "id":1,			//消息ID
+        "title":"测试1",	//消息标题
+        "date":"2016-04-01 11:12:13",	//发布时间
+        "author":"管理员",				//作者
+        "content":"html样式的正文"	//正文
+    });
+
+    var json=eval(str);
+    console.log(json);
+    var wrap=$('<div><h1 class="big-tit">五一劳动节放假通知</h1><p class="active-date">'+json.date+'</p><p class="active-detail">'+json.content+'</p></div>');
+    wrap.addClass('wrap');
+    wrap.appendTo($('body'));
+</script>
+</html>

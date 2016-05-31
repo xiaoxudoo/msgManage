@@ -12,10 +12,10 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        '/display',
-        '/preview',
-        '/groups',
-        '/manage/delete',
-        '/manage/merge',
+        // '/display',
+        // '/preview',
+        // '/groups',
+        // '/manage/delete',
+        // '/manage/merge',
     ];
 }

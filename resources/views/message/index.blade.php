@@ -115,7 +115,7 @@
     }
 
     function preview($mid){
-        var $data = {'message_id':$mid}; 
+        var $data = {'message_id':$mid,'_token':$("input[name='_token']").val()}; 
         $.ajax({
               type:"POST",
               url :"/preview",
@@ -140,7 +140,7 @@
     }
     
     function queryCallback($mid,$state){
-        var $data = {'is_display':$state,'message_id':$mid};
+        var $data = {'is_display':$state,'message_id':$mid,'_token':$("input[name='_token']").val()};
         var r =confirm("确认要进行此操作么？");
         if (r==true){
           $.ajax({

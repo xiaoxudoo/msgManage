@@ -162,7 +162,12 @@ class MsgRecordController extends Controller
         }
 
         $message_id = $request->message_id;
-        $MsgRecord = Message::where('m_id', '=', $message_id)->get();
+        $MsgRecord = Message::
+                leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
+                ->select('messages.*','message_second_groups.mfg_id')
+                ->where('messages.m_id', '=', $message_id)
+                ->get();
+
         if(!$MsgRecord->isEmpty()){
             $MsgRecord = $MsgRecord->all(); //模型对象的集合转化为模型对象的数组
             $ret['status'] ='0';

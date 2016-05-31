@@ -192,10 +192,10 @@
 
     $(document).ready(function(){
 
-        $.post("/groups",function(res){
+        $.post("/groups",{'_token':$("input[name='_token']").val()},function(res){
             if(res.status == 0){
-                window.first_class = res.first_class; //设置为JavaScript全局变量
-                console.log(window.first_class);
+                // window.first_class = res.first_class; //设置为JavaScript全局变量
+                // console.log(window.first_class);
 
                 var f_selectObj = $("#first_groups");
                 f_selectObj.children().remove();
@@ -324,7 +324,7 @@
             var $m_create_date = $("#editDetail input[name='msg_date']").val();
             var $msg_id = $("#second_groups").val();
 
-            var $data = {'m_id':$m_id,'m_title':$m_title,'m_content':$m_content,'m_create_date':$m_create_date,'msg_id':$msg_id};
+            var $data = {'m_id':$m_id,'m_title':$m_title,'m_content':$m_content,'m_create_date':$m_create_date,'msg_id':$msg_id,'_token':$("input[name='_token']").val()};
             $.ajax({
                 type:"POST",
                 url :"/manage/merge",
@@ -347,7 +347,7 @@
         }
 
         function editMsgRecord($mid){
-            var $data = {'message_id':$mid};
+            var $data = {'message_id':$mid,'_token':$("input[name='_token']").val()};
             $.ajax({
                 type:"POST",
                 url :"/preview",
@@ -362,6 +362,14 @@
                         $("#editDetail input[name='msg_name']").val(res.data.m_title);
                         editor.setData(res.data.m_content); 
                         $("#editDetail input[name='msg_date']").val(res.data.m_send_timestamp);
+                        // 设置分组信息
+                        for(var i=0;i<$("#first_groups").children().length;i++){
+                          var $option =  $("#first_groups").children().eq(i);
+                          if( $option.val() == res.data.mfg_id){
+                            $option[0].selected = "true";
+                          }   
+                        }
+                        // $("#first_groups").val(res.data.mfg_id);
                         $("#second_groups").val(res.data.msg_id);
 
                         // 分组信息
@@ -387,7 +395,7 @@
     }
     //消息预览
     function preview($mid){
-        var $data = {'message_id':$mid};
+        var $data = {'message_id':$mid,'_token':$("input[name='_token']").val()};
         $.ajax({
               type:"POST",
               url :"/preview",
@@ -412,7 +420,7 @@
     }
 
     function deleMsgRecord($mid){
-        var $data = {'message_id':$mid};
+        var $data = {'message_id':$mid,'_token':$("input[name='_token']").val()};
         var r =confirm("确认要删除这条消息么？");
         if (r==true){
             $.ajax({
@@ -436,7 +444,4 @@
         }    
     }
 
-
-
-    
 </script>
