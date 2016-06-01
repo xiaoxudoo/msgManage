@@ -13,6 +13,8 @@ class MessageFirstGroup extends Model
      **/
     public $primaryKey='mfg_id';
 
+    protected $table = 'message_first_group';
+
     public $timestamps = false;
 
     public function hasManySecondGroup()

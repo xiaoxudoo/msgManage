@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessageFirstGroupsTable extends Migration
+class CreateMessageFirstGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateMessageFirstGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('message_first_groups', function (Blueprint $table) {
+        Schema::create('message_first_group', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->primary('mfg_id');
             $table->tinyInteger('mfg_id')->unique();
@@ -28,6 +28,6 @@ class CreateMessageFirstGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('message_first_groups');
+        Schema::drop('message_first_group');
     }
 }

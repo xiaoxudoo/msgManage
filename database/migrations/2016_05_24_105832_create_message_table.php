@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesTable extends Migration
+class CreateMessageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('message', function (Blueprint $table) {
             $table->engine = 'InnoDB';  //设置索引必须的
             $table->increments('m_id');
             $table->string('m_title',64)->unique();
@@ -23,7 +23,7 @@ class CreateMessagesTable extends Migration
             $table->timestamp('m_send_timestamp');
             $table->string('m_content',20480);
             $table->tinyInteger('msg_id');
-            $table->foreign('msg_id')->references('msg_id')->on('message_second_groups');
+            $table->foreign('msg_id')->references('msg_id')->on('message_second_group');
             $table->integer('m_received_amount')->default(0);
             $table->integer('m_sent_unreceived_amount')->default(0);
             $table->integer('m_total_amount')->default(0);
@@ -47,6 +47,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('messages');
+        Schema::drop('message');
     }
 }

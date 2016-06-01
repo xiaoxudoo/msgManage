@@ -7,7 +7,7 @@ class MessageTableSeeder extends Seeder {
 
   public function run()
   {
-    DB::table('messages')->delete();
+    DB::table('message')->delete();
 
     for ($i=0; $i < 100; $i++) {
       Message::create([

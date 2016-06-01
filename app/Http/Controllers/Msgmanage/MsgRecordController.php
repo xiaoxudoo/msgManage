@@ -28,8 +28,8 @@ class MsgRecordController extends Controller
         $itemNum=20;
 
         $MsgRecord = Message::
-            leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
-            ->select('messages.*','message_second_groups.msg_name')
+            leftJoin('message_second_group', 'message_second_group.msg_id', '=', 'message.msg_id')
+            ->select('message.*','message_second_group.msg_name')
             ->orderBy('m_send_timestamp', 'desc')
             ->paginate($itemNum);
         
@@ -57,16 +57,16 @@ class MsgRecordController extends Controller
             $keywords=$request->keywords;
             if($validator -> fails()){
                 $MsgRecord = Message::
-                leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
-                ->select('messages.*','message_second_groups.msg_name')
-                ->where('messages.m_title', 'like', '%'.$keywords.'%')
+                leftJoin('message_second_group', 'message_second_group.msg_id', '=', 'message.msg_id')
+                ->select('message.*','message_second_group.msg_name')
+                ->where('message.m_title', 'like', '%'.$keywords.'%')
                 ->orderBy('m_send_timestamp', 'desc')
                 ->paginate($itemNum);
             }else{
                 $MsgRecord = Message::
-                leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
-                ->select('messages.*','message_second_groups.msg_name')
-                ->where('messages.m_send_date', '=', $keywords)
+                leftJoin('message_second_group', 'message_second_group.msg_id', '=', 'message.msg_id')
+                ->select('message.*','message_second_group.msg_name')
+                ->where('message.m_send_date', '=', $keywords)
                 ->orderBy('m_send_timestamp', 'desc')
                 ->paginate($itemNum);
             }
@@ -86,9 +86,9 @@ class MsgRecordController extends Controller
         $itemNum=20;
         $groups=$request->groups;
         $MsgRecord = Message::
-            leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
-            ->select('messages.*','message_second_groups.msg_name')
-            ->where('messages.msg_id', '=', $groups)
+            leftJoin('message_second_group', 'message_second_group.msg_id', '=', 'message.msg_id')
+            ->select('message.*','message_second_group.msg_name')
+            ->where('message.msg_id', '=', $groups)
             ->orderBy('m_send_timestamp', 'desc')
             ->paginate($itemNum);
 
@@ -162,9 +162,9 @@ class MsgRecordController extends Controller
 
         $message_id = $request->message_id;
         $MsgRecord = Message::
-                leftJoin('message_second_groups', 'message_second_groups.msg_id', '=', 'messages.msg_id')
-                ->select('messages.*','message_second_groups.mfg_id')
-                ->where('messages.m_id', '=', $message_id)
+                leftJoin('message_second_group', 'message_second_group.msg_id', '=', 'message.msg_id')
+                ->select('message.*','message_second_group.mfg_id')
+                ->where('message.m_id', '=', $message_id)
                 ->get();
 
         if(!$MsgRecord->isEmpty()){
