@@ -16,10 +16,13 @@
 |
 */ 
 
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
-});
-//Route::group(['middleware' => ['web','session_user'], 'namespace' => 'MsgManage'], function(){
+Route::get('login', 'Auth\AuthController@showLoginForm');
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
+//注册路由
+Route::get('register', 'Auth\AuthController@showRegistrationForm');
+Route::post('register', 'Auth\AuthController@register');
+
 Route::group(['middleware' => ['web','auth'], 'namespace' => 'MsgManage'], function(){
 	Route::get('/', 'MsgRecordController@getMsgRecordList');
 	//搜索消息记录
@@ -46,6 +49,15 @@ Route::group(['middleware' => ['web','auth'], 'namespace' => 'MsgManage'], funct
 	//消息记录管理 ———— 增加和修改
 	Route::post('/manage/merge', 'MsgManageController@createMsgRecord');
 	
+});
+
+/*
+|
+| 验证码
+|
+*/
+Route::group(['middleware' => ['web'], 'namespace' => 'Captcha'], function(){
+    Route::get('/validitPicture/{tmp}', 'CaptchaController@index');
 });
 
 

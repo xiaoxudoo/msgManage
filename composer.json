@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "monolog/monolog": "^1.19",
         "overtrue/laravel-wechat": "~3.0",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "gregwar/captcha": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

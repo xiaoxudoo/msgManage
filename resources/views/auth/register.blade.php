@@ -11,58 +11,64 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Name</label>
+                            <label class="col-md-4 control-label">User Name</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control" name="u_name" value="{{ old('u_name') }}">
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('u_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('u_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('u_password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password">
 
-                                @if ($errors->has('password'))
+                                @if ($errors->has('u_password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('u_password') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('u_password_confirmation') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Confirm Password</label>
 
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
+                                <input type="password" class="form-control" name="u_password_confirmation">
 
-                                @if ($errors->has('password_confirmation'))
+                                @if ($errors->has('u_password_confirmation'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                        <strong>{{ $errors->first('u_password_confirmation') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('u_captcha') ? ' has-error' : '' }}">
+                            
+                            <label class="col-md-4 control-label">Verify Code</label>
+
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="u_captcha" value="{{ old('u_captcha') }}" required placeholder=请输入验证码 />
+
+                                @if ($errors->has('u_captcha'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('u_captcha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-3">
+                               <a onclick="javascript:re_captcha();">
+                                    <img id="recaptcha" src="{{ url('/validitPicture/1') }}" alt="">
+                                </a> 
                             </div>
                         </div>
 
@@ -79,4 +85,13 @@
         </div>
     </div>
 </div>
+</body>
+<script>
+    function re_captcha() {
+        $url = "{{ URL('/validitPicture') }}";
+        $url = $url + "/" + Math.random();
+        document.getElementById('recaptcha').src=$url;
+    }
+    
+</script>
 @endsection

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
+use Illuminate\Support\Facades\Session;
+
 trait AuthenticatesUsers
 {
     use RedirectsUsers;
@@ -58,6 +60,13 @@ trait AuthenticatesUsers
     {
         $this->validateLogin($request);
 
+        $u_captcha = Session::get('u_captcha');
+        if($request->u_captcha != $u_captcha){
+            return redirect('/login')
+                ->withInput()
+                ->withErrors(['u_captcha' => '验证码错误']);
+        }
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -94,7 +103,7 @@ trait AuthenticatesUsers
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            $this->loginUsername() => 'required', 'password' => 'required',
+            $this->loginUsername() => 'required', 'u_password' => 'required', 'u_captcha' => 'required|size:5',
         ]);
     }
 
@@ -126,8 +135,8 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        return redirect()->back()
-            ->withInput($request->only($this->loginUsername(), 'remember'))
+         return redirect()->back()
+            ->withInput($request->only($this->loginUsername()))
             ->withErrors([
                 $this->loginUsername() => $this->getFailedLoginMessage(),
             ]);
@@ -153,7 +162,7 @@ trait AuthenticatesUsers
      */
     protected function getCredentials(Request $request)
     {
-        return $request->only($this->loginUsername(), 'password');
+        return $request->only($this->loginUsername(), 'u_password');
     }
 
     /**

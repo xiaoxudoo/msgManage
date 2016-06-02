@@ -10,41 +10,51 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="form-group{{ $errors->has('u_name') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">User Name</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input type="text" class="form-control" name="u_name" value="{{ old('u_name') }}">
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('u_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('u_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('u_password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
+                                <input type="password" class="form-control" name="u_password">
 
-                                @if ($errors->has('password'))
+                                @if ($errors->has('u_password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('u_password') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
+                        <div class="form-group {{ $errors->has('u_captcha') ? ' has-error' : '' }}">
+                            
+                            <label class="col-md-4 control-label">Verify Code</label>
+
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" name="u_captcha" value="{{ old('u_captcha') }}" required placeholder=请输入验证码 />
+
+                                @if ($errors->has('u_captcha'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('u_captcha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-3">
+                               <a onclick="javascript:re_captcha();">
+                                    <img id="recaptcha" src="{{ url('/validitPicture/1') }}" alt="">
+                                </a> 
                             </div>
                         </div>
 
@@ -54,7 +64,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i>Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                <!-- <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> -->
                             </div>
                         </div>
                     </form>
@@ -63,4 +73,13 @@
         </div>
     </div>
 </div>
+</body>
+<script>
+    function re_captcha() {
+        $url = "{{ URL('/validitPicture') }}";
+        $url = $url + "/" + Math.random();
+        document.getElementById('recaptcha').src=$url;
+    }
+    
+</script>
 @endsection
